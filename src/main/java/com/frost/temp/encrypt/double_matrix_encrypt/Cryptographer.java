@@ -2,7 +2,9 @@ package com.frost.temp.encrypt.double_matrix_encrypt;
 
 import com.frost.temp.encrypt.matrix.Matrix;
 import com.frost.temp.logging.Logger;
+import com.google.common.base.Stopwatch;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public interface Cryptographer {
@@ -24,6 +26,7 @@ public interface Cryptographer {
      * @return the encrypted code in StringBuilder object
      */
     static String encryptDoubleMatrix(Matrix firstMatrix, Matrix secondMatrix, String message) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         StringBuilder code = new StringBuilder();
         char[] characters = message.toCharArray();
 
@@ -35,7 +38,8 @@ public interface Cryptographer {
             code.append(secondMatrix.getCharInCell(indexesFirstLetter[0], indexesSecondLetter[1]));
             code.append(firstMatrix.getCharInCell(indexesSecondLetter[0], indexesFirstLetter[1]));
         }
-        Logger.log(Level.INFO, "Code was generated successfully.", Cryptographer.class);
+        stopwatch.stop();
+        Logger.log(Level.INFO, "Code was generated successfully. Time: " + stopwatch.elapsed(TimeUnit.NANOSECONDS), Cryptographer.class);
         return code.toString();
     }
 }
