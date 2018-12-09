@@ -6,6 +6,7 @@ import com.frost.temp.encrypt.matrix.Matrix;
 import com.frost.temp.logging.Logger;
 import lombok.Getter;
 
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -23,8 +24,11 @@ public class DoubleMatrixCryptographer implements Cryptographer {
     private Set<Character> uniqueCharacters;
 
     public DoubleMatrixCryptographer(String message) {
-        if (message.isEmpty())
+        if (message.isEmpty()) {
             throw new IllegalArgumentException();
+        }
+
+        LocalTime timePoint = LocalTime.now();
 
         Set<Character> set = new HashSet<>();
         for (Character character : message.toCharArray())
@@ -42,6 +46,12 @@ public class DoubleMatrixCryptographer implements Cryptographer {
         firstMatrix = FactoryMatrix.newInstance().createUniqueCharMatrix(size);
         secondMatrix = FactoryMatrix.newInstance().createUniqueCharMatrix(size);
         fillMatrices();
+        Logger.log(
+                Level.INFO,
+                "Initialization DoubleMatrixCryptographer takes " + (LocalTime.now().getNano() - timePoint.getNano())
+                        + " nano." ,
+                this.getClass()
+        );
     }
 
     @Override
