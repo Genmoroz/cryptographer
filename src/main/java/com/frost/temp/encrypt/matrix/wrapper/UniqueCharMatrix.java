@@ -2,8 +2,6 @@ package com.frost.temp.encrypt.matrix.wrapper;
 
 import com.frost.temp.encrypt.matrix.Matrix;
 
-import java.util.Objects;
-
 public class UniqueCharMatrix extends MatrixDecorator implements Matrix {
 
     public UniqueCharMatrix(Matrix matrix) {

@@ -5,8 +5,10 @@ import com.frost.temp.encrypt.double_matrix_encrypt.Decoder;
 import com.frost.temp.encrypt.double_matrix_encrypt.impl.DoubleMatrixCryptographer;
 import com.frost.temp.encrypt.double_matrix_encrypt.impl.DoubleMatrixDecoder;
 import com.frost.temp.encrypt.matrix.Matrix;
+import com.frost.temp.logging.Logger;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 
 public class Main {
@@ -21,12 +23,21 @@ public class Main {
     }
 
     public static void main(String... args) {
-        Cryptographer cryptographer = new DoubleMatrixCryptographer("Gennady is the best developer!!! ХУЙ ЗАЛУПА ПОШЁЛ НАХУЙ ПИИИИДОOOOOOOOР я ебал твоё тёлку я ебал твою тёлку yyyyyyy");
+        if (args.length == 0) {
+            Logger.logAndPrint(Level.WARNING, "Message is empty, repeat attempt again.", Main.class);
+            return;
+        }
+        String message = "";
+        for (String str : args)
+            message += " " + str;
+
+        Cryptographer cryptographer = new DoubleMatrixCryptographer(message);
+
         Matrix[] matrices = cryptographer.getMatrices();
         cryptographer.encrypt();
-        System.out.println(cryptographer.getCode());
+        Logger.logAndPrint(Level.INFO, "Message: " + message, Main.class);
+        Logger.logAndPrint(Level.INFO, "Encrypted message: " + cryptographer.getCode(), Main.class);
         Decoder decoder = new DoubleMatrixDecoder(matrices[1], matrices[0], cryptographer.getCode());
-
-        System.out.println(decoder.decode());
+        Logger.logAndPrint(Level.INFO, "Decoded message: " + decoder.decode(), Main.class);
     }
 }

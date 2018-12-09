@@ -10,4 +10,8 @@ public class Logger {
     public static void log(Level level, String message, Class cl) {
         LOGGER.log(level, cl.getName() + ": msg: " + message);
     }
+    public static void logAndPrint(Level level, String message, Class cl) {
+        LOGGER.log(level, cl.getName() + ": msg: " + message);
+        System.out.println(cl.getName() + ": msg: " + message);
+    }
 }

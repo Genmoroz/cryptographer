@@ -4,11 +4,12 @@ import com.frost.temp.encrypt.double_matrix_encrypt.Cryptographer;
 import com.frost.temp.encrypt.matrix.FactoryMatrix;
 import com.frost.temp.encrypt.matrix.Matrix;
 import com.frost.temp.logging.Logger;
+import com.google.common.base.Stopwatch;
 import lombok.Getter;
 
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class DoubleMatrixCryptographer implements Cryptographer {
@@ -28,7 +29,7 @@ public class DoubleMatrixCryptographer implements Cryptographer {
             throw new IllegalArgumentException();
         }
 
-        LocalTime timePoint = LocalTime.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
 
         Set<Character> set = new HashSet<>();
         for (Character character : message.toCharArray())
@@ -46,10 +47,10 @@ public class DoubleMatrixCryptographer implements Cryptographer {
         firstMatrix = FactoryMatrix.newInstance().createUniqueCharMatrix(size);
         secondMatrix = FactoryMatrix.newInstance().createUniqueCharMatrix(size);
         fillMatrices();
+        stopwatch.stop();
         Logger.log(
                 Level.INFO,
-                "Initialization DoubleMatrixCryptographer takes " + (LocalTime.now().getNano() - timePoint.getNano())
-                        + " nano." ,
+                "Initialization DoubleMatrixCryptographer takes " + (stopwatch.elapsed(TimeUnit.MILLISECONDS)),
                 this.getClass()
         );
     }
@@ -96,9 +97,7 @@ public class DoubleMatrixCryptographer implements Cryptographer {
     }
 
     private void insertChar(char c, Matrix matrix) {
-        for (int x = 0; x < matrix.getCapacity(); x++)
-            for (int y = 0; y < matrix.getCapacity(); y++)
-                if (matrix.insertChar(c, x, y))
-                    return;
+        int[] indexes = matrix.getEmptyCell();
+        matrix.insertChar(c, indexes[0], indexes[1]);
     }
 }

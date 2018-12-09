@@ -21,12 +21,12 @@ public class DoubleMatrixDecoder implements Decoder {
 
     @Override
     public String decode() {
-        return Cryptographer.encryptDoubleMatrix(firstMatrix, secondMatrix, code).toString();
+        return Cryptographer.encryptDoubleMatrix(firstMatrix, secondMatrix, code);
     }
 
     @Override
     public Matrix[] getMatrices() {
-        return new Matrix[] {
+        return new Matrix[]{
                 firstMatrix,
                 secondMatrix
         };

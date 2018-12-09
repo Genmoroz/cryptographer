@@ -4,7 +4,8 @@ import com.frost.temp.encrypt.matrix.wrapper.UniqueCharMatrix;
 
 public class FactoryMatrix {
 
-    private FactoryMatrix() {}
+    private FactoryMatrix() {
+    }
 
     public Matrix createMatrix(int capacity) {
         return new com.frost.temp.encrypt.matrix.impl.Matrix(capacity);
