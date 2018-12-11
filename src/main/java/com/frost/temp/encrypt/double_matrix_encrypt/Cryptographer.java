@@ -39,7 +39,7 @@ public interface Cryptographer {
             code.append(firstMatrix.getCharInCell(indexesSecondLetter[0], indexesFirstLetter[1]));
         }
         stopwatch.stop();
-        Logger.log(Level.INFO, "Code was generated successfully. Time: " + stopwatch.elapsed(TimeUnit.MILLISECONDS), Cryptographer.class);
+        Logger.log(Level.INFO, "Code was generated successfully. Time: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms", Cryptographer.class);
         return code.toString();
     }
 }

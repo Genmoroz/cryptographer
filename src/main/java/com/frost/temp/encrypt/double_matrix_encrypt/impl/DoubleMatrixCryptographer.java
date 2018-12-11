@@ -50,7 +50,7 @@ public class DoubleMatrixCryptographer implements Cryptographer {
         stopwatch.stop();
         Logger.log(
                 Level.INFO,
-                "Initialization DoubleMatrixCryptographer takes " + (stopwatch.elapsed(TimeUnit.MILLISECONDS)),
+                "Initialization DoubleMatrixCryptographer takes " + (stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms"),
                 this.getClass()
         );
     }
