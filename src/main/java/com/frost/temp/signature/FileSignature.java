@@ -46,28 +46,9 @@ public class FileSignature {
         writeKey(file, key);
     }
 
-
-    public PublicKey sign(File file, String algorithm, int keySize, String keyMessage) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
-
-//        signature = Signature.getInstance(algorithm);
-//        signature.initSign(privateKey);
-//        signature.update(keyMessage.getBytes());
-//
-//        byte[] byteSignature = signature.sign();
-//        saveKey(file, byteSignature);
-//
-//        stopwatch.stop();
-//        Logger.log(Level.INFO, "The file was signed successfully. Time: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms", this.getClass());
-//        return publicKey;
+    public void writePublicKey(File file, PrivateKey key) {
+        writeKey(file, key);
     }
-
-//    public boolean verify(File file, PublicKey publicKey, String keyMessage) throws InvalidKeyException, SignatureException {
-//        signature.initVerify(publicKey);
-//        signature.update(keyMessage.getBytes());
-//        return signature.verify(readKey(file));
-//    }
 
     private void writeKey(File file, Object key) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
