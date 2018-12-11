@@ -34,23 +34,24 @@ public class FileSignature {
         return new FileSignature(cryptoAlgorithm, hashingAlgorithm);
     }
 
-    private void createKeys(int keySize) {
+    public FileSignature createKeys(int keySize) {
         generator.initialize(keySize, random);
         KeyPair keyPair = generator.generateKeyPair();
         privateKey = keyPair.getPrivate();
         publicKey  = keyPair.getPublic();
         Logger.logAndPrint(Level.INFO, "The public key " + Arrays.toString(publicKey.getEncoded()) + " is generated successfully", this.getClass());
+        return this;
     }
 
-    public void writePrivateKey(File file, PrivateKey key) {
-        writeKey(file, key);
+    public FileSignature writePrivateKey(File file) {
+        return writeKey(file, privateKey);
     }
 
-    public void writePublicKey(File file, PrivateKey key) {
-        writeKey(file, key);
+    public FileSignature writePublicKey(File file) {
+        return writeKey(file, publicKey);
     }
 
-    private void writeKey(File file, Object key) {
+    private FileSignature writeKey(File file, Object key) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(key);
             Logger.logAndPrint(Level.INFO, "The file " + file.getName() + " is signed successfully", this.getClass());
@@ -58,11 +59,12 @@ public class FileSignature {
             Logger.logAndPrint(Level.SEVERE, e, "The signing file " + file.getName() + " failed", this.getClass());
             e.printStackTrace();
         }
+        return this;
     }
 
-    private Object readKey(File file) {
+    public Key readKey(File file) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            return ois.readObject();
+            return (Key) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -80,13 +82,13 @@ public class FileSignature {
 //        return null;
 //    }
 
-    private static SignedObject createSignedObject(String message, PrivateKey key) throws InvalidKeyException,
+    public static SignedObject createSignedObject(String message, PrivateKey key) throws InvalidKeyException,
             SignatureException, IOException, NoSuchAlgorithmException {
         Signature signature = Signature.getInstance(key.getAlgorithm());
         return new SignedObject(message, key, signature);
     }
 
-    private static boolean verifySignedObject(SignedObject signedObject, PublicKey key)
+    public static boolean verifySignedObject(SignedObject signedObject, PublicKey key)
             throws InvalidKeyException, SignatureException, NoSuchAlgorithmException {
         Signature signature = Signature.getInstance(key.getAlgorithm());
         return signedObject.verify(key, signature);
