@@ -14,7 +14,9 @@ import java.util.logging.Level;
 
 public class DoubleMatrixCryptographer implements Cryptographer {
 
-    private static final String LETTERS = " АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVXYZ1234567890-_=+/?.>,<!@#$%^&*()\\\"~`|\\/':;";
+    private static final String LETTERS = " АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯАБВГДЕ" +
+            "ЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRST" +
+            "UVXYZ1234567890-_=+/?.>,<!@#$%^&*()\\\"~`|\\/':;";
 
     private Matrix firstMatrix;
     private Matrix secondMatrix;
